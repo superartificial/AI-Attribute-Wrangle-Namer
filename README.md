@@ -1,43 +1,38 @@
-# Houdini Wrangle Namer
+# AI Houdini Attribute Wrangle Namer
 
-An AI-powered tool for automatically naming and documenting AttributeWrangle nodes in SideFX Houdini based on their VEX code.
+An AI-powered Houdini shelf tool for automatically naming and documenting AttributeWrangle nodes in SideFX Houdini based on their VEX code.
+
+This version uses OpenAI, with gpt-4o as the default model. It can easily be changed to use a different OpenAI model, and could be adapted to support other vendors (though that would require altering the code to add the appropriate libraries)
 
 ## Features
 
-- Automatically generates descriptive names for AttributeWrangle nodes based on their VEX code
-- Creates detailed documentation in node comments
-- Uses OpenAI's GPT-4 for intelligent analysis
-- Supports batch processing of multiple nodes
-- Progress tracking with UI feedback
-- Detailed error reporting
+- Automatically generates descriptive names for selected Attribute Wrangle nodes based on their VEX code
+- Creates breif documentation in node comments
+- Will name multiple attribute wrangles in one click if more than one selected (other nodes are ignored)
+
 
 ## Installation
 
-1. Clone this repository to your local machine:
-```bash
-git clone https://github.com/yourusername/houdini_wrangle_namer.git
-```
+1) Install the OpenAI library for Houdini's Python:
 
-2. Install the required Python package:
-```bash
-pip install openai>=1.0.0
-```
+"path/to/houdini/python.exe" -m pip install --upgrade openai
 
-3. Set up your OpenAI API key:
+Note that installing for your global Python won't work. If you don't know the location for the correct python.exe you can find it by running this in the Python shell:
+
+import sys
+print(sys.executable)
+
+2) Create a new shelf tool, with the contents of python/wrangle_namer.py copied into the script tab
+
+3) Set up your OpenAI API key:
    - Replace the API_KEY variable in the script with your OpenAI API key
-   - Or set it as an environment variable
+   - Or set it as an environment variable (this requires a code change, and setting up the env variable, and I haven't tested with it: API_KEY = os.getenv('OPENAI_API_KEY', ''))
+
+4) Adding a keyboard shortcut for the shelf tool is also recommended if you plan to use it frequently
 
 ## Usage
 
-1. Copy `wrangle_namer.py` to your Houdini Python scripts directory
-2. In Houdini:
-   - Select one or more AttributeWrangle nodes
-   - Run the script using Python Editor or create a shelf tool
-   - The script will automatically:
-     - Analyze the VEX code
-     - Generate appropriate names
-     - Add documentation as comments
-     - Display progress and any errors in the UI
+Select one or more attribute wrange nodes, and run the tool.
 
 ## Configuration
 
@@ -47,13 +42,13 @@ The script includes several configuration options at the top:
 DEBUG = True                     # Print debug information
 ADD_COMMENTS = True             # Add descriptions as node comments
 DISPLAY_COMMENTS = True         # Show comments in network view
-OPENAI_MODEL = "gpt-4"         # OpenAI model to use
+OPENAI_MODEL = "gpt-4o"         # OpenAI model to use
 ```
 
 ## Requirements
 
-- Houdini 19.5 or later
-- Python 3.7+
+- Houdini 19.5 or later (may work on earlier versions)
+- Python 3.7+ (again possibly earlier will work)
 - OpenAI API key
 - `openai` Python package version 1.0.0 or later
 
